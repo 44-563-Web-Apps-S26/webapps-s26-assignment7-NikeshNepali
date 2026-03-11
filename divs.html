@@ -38,6 +38,7 @@
 		<button onclick="makeNewDiv()">Add end</button>
         <button onclick="addFront()">Add Front</button>
         <button onclick="remove()">Remove</button>
+        <button onclick="shuffle()">Shuffle</button>
 	
 	
 </body>
@@ -75,6 +76,13 @@
         /* add it to the container */
         let container = document.getElementById('target')
         container.insertBefore(element, container.firstChild);
+    }
+
+    function shuffle(){
+        let container = document.getElementById('target');
+        for(let i = container.children.length; i >= 0; i--){
+            container.appendChild(container.children[Math.random() * i | 0]);
+        }
     }
 </script>
 </html>	

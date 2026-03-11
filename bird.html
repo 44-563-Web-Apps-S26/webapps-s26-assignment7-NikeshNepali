@@ -112,11 +112,63 @@
   var score = 0;
   var locationsVisited = 0;
   var lastLocation = 0;
-  const statueLocation = 19;
-  const toucanLocation = 14;
-  const lorikeetLocation = [3, 25];
-  const buntingLocation = [2, 5, 11, 20, 21];
   var gameOver = false;
+
+  const maxPosition = 34;
+
+  function getRandomPositions() {
+    let positions = new Set();
+    function getUnique() {
+      let pos;
+      do {
+        pos = Math.floor(Math.random() * (maxPosition + 1));
+      } while (positions.has(pos));
+      positions.add(pos);
+      return pos;
+    }
+
+    const statueLocation = getUnique();
+    const toucanLocation = getUnique();
+    const lorikeetLocation = [getUnique(), getUnique()];
+    const buntingLocation = [getUnique(), getUnique(), getUnique(), getUnique(), getUnique()];
+
+    return { statueLocation, toucanLocation, lorikeetLocation, buntingLocation };
+  }
+
+  let { statueLocation, toucanLocation, lorikeetLocation, buntingLocation } = getRandomPositions();
+
+  function moveToucan() {
+    const directions = ["north", "south", "east", "west"];
+    const boardSize = 7; 
+    let moved = false;
+
+    while (!moved) {
+      let dir = directions[Math.floor(Math.random() * directions.length)];
+      let row = Math.floor(toucanLocation / boardSize);
+      let col = toucanLocation % boardSize;
+      let newPos = toucanLocation;
+
+      switch(dir) {
+        case "north":
+          if (row > 0) newPos -= boardSize;
+          break;
+        case "south":
+          if (row < 4) newPos += boardSize; 
+          break;
+        case "east":
+          if (col < boardSize - 1) newPos += 1;
+          break;
+        case "west":
+          if (col > 0) newPos -= 1;
+          break;
+      }
+
+      if (newPos !== toucanLocation) {
+        toucanLocation = newPos;
+        moved = true;
+      }
+    }
+  }
 
   function check(position) {
     if (gameOver) {
