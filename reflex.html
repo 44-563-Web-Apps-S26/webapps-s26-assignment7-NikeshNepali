@@ -17,7 +17,7 @@
   <h2>Nikesh Reflexes</h2>
   <div id="target" class="primary">Your Time</div>
   <div id="counter" class="danger">Count</div>
-  <button type="button" class="btn btn-primary"> Go</button>
+  <button type="button" class="btn btn-primary" onclick="beginTime()"> Go</button>
   <button type="button" class="btn btn-secondary" onclick="recordTime()">
   Halt</button>
   
@@ -27,6 +27,27 @@
     haltTime = new Date();
     console.log(haltTime);
   }
+
+  function beginTime() {
+  haltTime = undefined;
+  for (let i = 0; i <= 5; i++) {
+    setTimeout(() => {
+      document.getElementById('counter').innerText = i;
+    }, (5 - i) * 1000);
+  }
+
+  setTimeout(() => {
+    const target = document.getElementById('target');
+
+    if (haltTime === undefined) {
+      target.innerText = "Not Soon Enough!";
+    } else {
+      const targetTime = Date.now();
+      const elapsedTime = targetTime - haltTime.getTime();
+      target.innerText = "Time was " + elapsedTime;
+    }
+  }, 5000);
+}
 
   </script>
 
